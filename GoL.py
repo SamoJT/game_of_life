@@ -93,10 +93,12 @@ def update_state(w, h, buf, old_cell_states):
             except:
                 continue
             x0 = ((index+1)*10)*2
-            if 1 < alive_n > 4 and val == 1:
+            
+            if val and 1 < alive_n < 4:
                 new_cell_states.append((x0,y0))
-            elif alive_n == 3 and val == 0:
+            elif not val and alive_n == 3:
                 new_cell_states.append((x0,y0))
+            
             alive_n = 0            
             # print((x0,y0), val)
             index += 1
@@ -108,13 +110,13 @@ def main_loop(w, h, buf, coords):
     fill_squares(coords)
     cell_states = get_state(w, h, buf, coords)
     coords = update_state(w, h, buf, cell_states)
-    root.after(500, main_loop, w, h, buf, coords)
+    root.after(200, main_loop, w, h, buf, coords)
 
 
 w = 820
 h = 820
 buf = 20  # Edge buffer
-seed = 700 # Starting amount of cells
+seed = 500 # Starting amount of cells
 
 root = tk.Tk()
 canvas = tk.Canvas(root, width=w, height=h, background='white')
